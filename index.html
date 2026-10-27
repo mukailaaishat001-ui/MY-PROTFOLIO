@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AISHAT STACK | Full Stack Web Development Studio</title>
+<meta name="description" content="AISHAT STACK builds websites, web applications and APIs end to end, from interface to database.">
+<link rel="canonical" href="https://example.com/">
+<meta property="og:title" content="AISHAT STACK | Full Stack Web Development">
+<meta property="og:description" content="Websites, web applications and APIs, built end to end.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com/">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23000'/%3E%3Cpath d='M9 22l7-12 7 12' fill='none' stroke='%23ccff00' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#000;--bg2:#0e0e0e;--line:#242424;--text:#fff;--mute:#9a9a9a;--acc:#ccff00;--err:#ff6b5e;
+--f:'Space Grotesk',Arial,sans-serif;--m:'IBM Plex Mono',ui-monospace,Menlo,monospace;--r:24px;--max:1200px}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--text);font:400 1.05rem/1.6 var(--f);overflow-x:hidden}
+h1,h2,h3{font-weight:500;line-height:1.02;letter-spacing:-.035em}
+h1{font-size:clamp(2.8rem,8vw,6.5rem)}
+h2{font-size:clamp(2rem,5vw,4rem);margin-bottom:1.2rem}
+h3{font-size:clamp(1.4rem,2.4vw,2rem)}
+p{color:var(--mute);max-width:60ch}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+section{padding:6rem 0}
+.mono{font:500 .8rem var(--m);letter-spacing:.04em;color:var(--acc)}
+.skip{position:absolute;left:-999px;background:var(--acc);color:#000;padding:.5rem 1rem;z-index:99}.skip:focus{left:1rem;top:1rem}
+header.nav{position:sticky;top:0;z-index:40;padding:.8rem 0}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:rgba(14,14,14,.85);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:100px;padding:.5rem .6rem .5rem 1.4rem}
+.logo{font-weight:700;letter-spacing:-.02em;text-decoration:none}.logo i{color:var(--acc);font-style:normal}
+nav ul{display:flex;gap:.2rem;list-style:none;padding:0;align-items:center}
+nav a.link{display:block;padding:.5rem 1rem;text-decoration:none;color:var(--mute);border-radius:100px}
+nav a.link:hover,nav a.link[aria-current=page]{color:var(--text)}
+nav a.link[aria-current=page]{background:#1c1c1c}
+.btn{display:inline-block;font:500 1rem var(--f);padding:.85rem 1.6rem;border-radius:100px;border:1px solid var(--line);background:transparent;color:var(--text);text-decoration:none;cursor:pointer;transition:transform .2s,background .2s,color .2s}
+.btn:hover{transform:translateY(-2px);border-color:var(--acc);color:var(--acc)}
+.btn.pri{background:var(--acc);color:#000;border-color:var(--acc)}.btn.pri:hover{background:#fff;border-color:#fff;color:#000}
+.btn:disabled{opacity:.6;cursor:wait;transform:none}
+.menu{display:none;background:none;border:1px solid var(--line);color:var(--text);padding:.5rem 1rem;border-radius:100px;font:inherit}
+.row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+.view{display:none}.view.on{display:block}
+/* hero */
+.hero{padding-top:4rem;display:grid;grid-template-columns:1.3fr .7fr;gap:3rem;align-items:center}
+.hero .lead{font-size:1.25rem;color:#d0d0d0;margin-top:1.6rem}
+.hero h1{animation:rise .8s both;text-shadow:0 2px 0 #1a1a1a,0 4px 0 #111,0 14px 30px rgba(204,255,0,.12)}
+/* 3D stack */
+.toggle{position:relative;overflow:hidden;width:100%;aspect-ratio:1;max-width:380px;justify-self:center;border-radius:var(--r);border:1px solid var(--line);background:radial-gradient(circle at 50% 35%,#171717,var(--bg2) 70%);cursor:pointer;color:inherit;font:inherit;padding:0}
+.toggle canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.toggle .cap{position:absolute;left:0;right:0;bottom:1rem;text-align:center;font:500 .8rem var(--m);color:var(--mute);padding:0 1rem}
+.toggle[aria-pressed=true] .cap{color:var(--acc)}
+/* 3D tilt */
+.work,.stat,.sp a{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .18s ease-out,border-color .2s;will-change:transform}
+/* marquee */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:1.2rem 0}
+.marq div{display:flex;gap:3rem;width:max-content;animation:mq 30s linear infinite;font:500 1.1rem var(--m);color:var(--mute)}
+.marq:hover div{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* approach */
+.appr{display:grid;grid-template-columns:.8fr 1.2fr;gap:4rem}
+.appr .sticky{position:sticky;top:110px;align-self:start}
+.step{border:1px solid var(--line);border-radius:var(--r);padding:2rem;margin-bottom:1rem;background:var(--bg2)}
+.step h3{margin:.4rem 0 .8rem}
+/* work */
+.work{border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);overflow:hidden;display:grid;grid-template-columns:1fr 1fr;margin-bottom:1.2rem}
+.work .txt{padding:2.2rem;display:flex;flex-direction:column;gap:.9rem}
+.work .vis{background:#050505;border-left:1px solid var(--line);display:grid;place-items:center;min-height:280px;padding:1.5rem}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0}
+.pills li{font:500 .75rem var(--m);border:1px solid var(--line);padding:.2rem .8rem;border-radius:100px;color:var(--mute)}
+.work .btn{align-self:flex-start;margin-top:auto}
+.sample{font:500 .75rem var(--m);color:var(--acc)}
+.mock{width:100%;max-width:340px;border:1px solid #333;border-radius:14px;overflow:hidden;background:#111}
+.mock .b{display:flex;gap:5px;padding:.6rem;border-bottom:1px solid #222}.mock .b i{width:8px;height:8px;border-radius:50%;background:#333}
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.5rem 0 2rem}
+.filters button{background:none;border:1px solid var(--line);color:var(--mute);padding:.5rem 1.2rem;border-radius:100px;font:inherit;cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--acc);color:#000;border-color:var(--acc)}
+/* services */
+.svc{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;padding:2.5rem 0;border-top:1px solid var(--line)}
+.svc ul{padding-left:1.1rem;color:var(--mute)}
+.svc h4{margin:1.2rem 0 .3rem;font:500 .8rem var(--m);color:var(--acc)}
+.sp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.sp a{border:1px solid var(--line);border-radius:var(--r);padding:1.8rem;text-decoration:none;background:var(--bg2)}.sp a:hover{border-color:var(--acc)}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.stat{border:1px solid var(--line);border-radius:var(--r);padding:2rem}
+.stat b{display:block;font:500 clamp(3rem,6vw,5rem)/1 var(--f);color:var(--acc);letter-spacing:-.04em;margin-bottom:.6rem;text-shadow:0 1px 0 #7a9900,0 2px 0 #5c7300,0 3px 0 #3d4d00,0 8px 14px rgba(204,255,0,.18)}
+/* lab window */
+.win{border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);overflow:hidden}
+.win .b{display:flex;gap:6px;padding:.9rem 1.1rem;border-bottom:1px solid var(--line);align-items:center}.win .b i{width:11px;height:11px;border-radius:50%;background:#333}.win .b span{margin-left:1rem;font:400 .8rem var(--m);color:var(--mute)}
+.win pre{padding:1.6rem;font:400 .95rem/1.8 var(--m);color:#d0d0d0;white-space:pre-wrap}.win pre b{color:var(--acc);font-weight:500}
+.cur{display:inline-block;width:9px;height:1em;background:var(--acc);vertical-align:-2px;animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+.cta{border-radius:var(--r);background:var(--acc);color:#000;padding:clamp(2rem,6vw,5rem)}
+.cta p{color:#222}.cta .btn{border-color:#000;color:#000}.cta .btn.pri{background:#000;color:var(--acc)}.cta .btn:hover{background:#fff}
+details{border-bottom:1px solid var(--line);padding:1.2rem 0}summary{cursor:pointer;font-size:1.2rem;font-weight:500}details p{margin-top:.6rem}
+/* form */
+form{display:grid;gap:1.1rem}.f2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+label{display:block;font-weight:500;font-size:.95rem;margin-bottom:.3rem}label small{color:var(--mute);font-weight:400}
+input,select,textarea{width:100%;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:.85rem 1rem;font:inherit}
+input[type=checkbox]{width:auto}
+textarea{min-height:140px;resize:vertical}
+[aria-invalid=true]{border-color:var(--err)}
+.err{color:var(--err);font-size:.85rem;min-height:1.1em}
+.status{padding:1rem 1.2rem;border-radius:16px;border:1px solid var(--line);display:none}.status.show{display:block}.status.ok{border-color:var(--acc)}.status.bad,.status.demo{border-color:var(--err)}
+.two{display:grid;grid-template-columns:1.2fr .8fr;gap:3rem}
+.box{border:1px dashed var(--line);border-radius:var(--r);padding:1.5rem;margin-top:1rem}
+dialog{width:min(900px,94vw);max-height:90vh;overflow:auto;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:var(--r);padding:1.8rem}
+dialog::backdrop{background:rgba(0,0,0,.8)}
+dialog h4{margin:1.5rem 0 .3rem;font:500 .8rem var(--m);color:var(--acc)}
+.arch{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.6rem 0}.arch span{border:1px solid var(--line);padding:.5rem 1rem;border-radius:100px;font-size:.9rem}.arch em{color:var(--acc);font-style:normal}
+footer{border-top:1px solid var(--line);padding:4rem 0 2rem}
+footer .cols{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2rem}
+footer ul{list-style:none;padding:0;display:grid;gap:.4rem}footer a{color:var(--mute);text-decoration:none}footer a:hover{color:var(--acc)}
+footer h3{font:500 .8rem var(--m);color:var(--acc);margin-bottom:.8rem;letter-spacing:.04em}
+.top{position:fixed;right:1rem;bottom:1rem;display:none;z-index:30;background:#000}.top.show{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}}
+@media(max-width:860px){
+.hero,.appr,.work,.svc,.two,footer .cols,.f2{grid-template-columns:1fr}
+.appr .sticky{position:static}.work .vis{border-left:0;border-top:1px solid var(--line)}
+.menu{display:block}
+nav ul{display:none;position:absolute;top:70px;left:1.25rem;right:1.25rem;flex-direction:column;align-items:stretch;background:#0e0e0e;border:1px solid var(--line);border-radius:var(--r);padding:1rem}
+nav ul.open{display:flex}
+section{padding:4rem 0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap"><div class="bar">
+<a class="logo" href="#home">AISHAT <i>STACK</i></a>
+<nav aria-label="Main"><ul id="menu">
+<li><a class="link" href="#home">Home</a></li><li><a class="link" href="#services">Services</a></li><li><a class="link" href="#portfolio">Portfolio</a></li><li><a class="link" href="#contact">Contact</a></li>
+<li><a class="btn pri" href="#contact">Discuss Your Project</a></li></ul></nav>
+<button class="menu" id="mbtn" aria-expanded="false" aria-controls="menu">Menu</button></div></div></header>
+
+<main id="main" tabindex="-1">
+<!-- HOME -->
+<div class="view" id="v-home" data-title="Full Stack Web Development Studio">
+<section class="wrap hero">
+<div><p class="mono">Full stack development studio</p>
+<h1 style="margin-top:1rem">Software your business can lean on.</h1>
+<p class="lead">AISHAT STACK designs and builds websites, web applications and APIs from interface to database, so what launches keeps working after it does.</p>
+<div class="row"><a class="btn pri" href="#contact">Discuss Your Project</a><a class="btn" href="#portfolio">Explore My Work</a></div></div>
+<button class="toggle" id="tg" aria-pressed="false" aria-label="Separate the stack into its four layers"><canvas id="gl" aria-hidden="true"></canvas><span class="cap">Click to separate the layers</span></button>
+</section>
+<div class="marq" aria-label="Technologies"><div id="mq"></div></div>
+
+<section class="wrap appr"><div class="sticky"><p class="mono">Approach</p><h2 style="margin-top:.6rem">Think first. Then build.</h2><p>A clear process, so you always know what is happening and what comes next.</p></div>
+<div>
+<div class="step"><p class="mono">Listen</p><h3>We start with the business, not the code.</h3><p>Goals, users, constraints and what stands between where you are and where you want to be.</p></div>
+<div class="step"><p class="mono">Plan</p><h3>A scope with a point of view.</h3><p>Priorities, architecture and a written proposal with timeline and estimate.</p></div>
+<div class="step"><p class="mono">Build</p><h3>Interface, server and database together.</h3><p>One builder across the stack means no translation loss between design and engineering. You review in stages.</p></div>
+<div class="step"><p class="mono">Improve</p><h3>Launch is a starting point.</h3><p>Testing, monitoring, fixes and new features once real users arrive.</p></div></div></section>
+
+<section class="wrap"><p class="mono">Selected work</p><h2 style="margin-top:.6rem">Built to be used.</h2><p>Illustrative sample projects. Replace them with real work in the CONFIG object.</p><div style="margin-top:2rem" id="featured"></div></section>
+
+<section class="wrap"><p class="mono">Services</p><h2 style="margin-top:.6rem">Deep craft. Whole stack.</h2><div class="sp" id="svcprev"></div><div class="row"><a class="btn" href="#services">Explore Services</a></div></section>
+
+<section class="wrap"><p class="mono">By the numbers</p><h2 style="margin-top:.6rem">Facts, not decoration.</h2><div class="stats">
+<div class="stat"><b>05</b><h3>Service lines</h3><p>Websites, applications, APIs, e-commerce and maintenance.</p></div>
+<div class="stat"><b>04</b><h3>Layers owned</h3><p>Interface, server, database and integrations handled together.</p></div>
+<div class="stat"><b>--</b><h3>Your real metric</h3><p>Add a verified result from real work here. Leave it out if you have none yet.</p></div></div></section>
+
+<section class="wrap"><div class="win"><div class="b"><i></i><i></i><i></i><span>aishatstack / now-building</span></div>
+<pre><b>$</b> status --stack
+<b>interface</b>  semantic, accessible, fast
+<b>server</b>     validated, permissioned APIs
+<b>database</b>   modelled before it is built
+<b>$</b> open-for-new-projects<span class="cur" aria-hidden="true"></span></pre></div></section>
+
+<section class="wrap"><div class="cta"><p class="mono" style="color:#000">Start here</p><h2 style="margin-top:.6rem">Your product deserves better than adequate.</h2><p>Tell me what you want to build. We begin with a conversation, then a scoped proposal.</p><div class="row"><a class="btn pri" href="#contact">Book a Consultation</a><a class="btn" href="#portfolio">View My Work</a></div></div></section>
+</div>
+
+<!-- SERVICES -->
+<div class="view" id="v-services" data-title="Services">
+<section class="wrap"><p class="mono">Services</p><h1 style="font-size:clamp(2.5rem,6vw,5rem);margin-top:.6rem">What I build.</h1><p style="margin-top:1rem">Scope depends on your requirements, so every project begins with a discovery conversation and a written proposal.</p><div id="svclist" style="margin-top:2rem"></div>
+<h2 style="margin-top:3rem">How we start</h2><p>Discovery consultation, then a scoped proposal with timeline and estimate, then a staged build. Pricing is set per project: <a href="#contact" style="color:var(--acc)">Request a Project Estimate</a>.</p>
+<h2 style="margin-top:3rem">FAQ</h2>
+<details><summary>How long does a project take?</summary><p>It depends on scope. You get a timeline in your proposal. [Edit this answer]</p></details>
+<details><summary>How will we communicate?</summary><p>Through your preferred channel with regular updates. [Edit this answer]</p></details>
+<details><summary>Do you offer maintenance?</summary><p>Yes. See Website Maintenance and Optimization above.</p></details>
+<details><summary>How are revisions handled?</summary><p>Revision rounds are agreed in the proposal. [Edit this answer]</p></details>
+<details><summary>How does a project begin?</summary><p>Send an inquiry or book a consultation. We discuss goals and scope first.</p></details></section></div>
+
+<!-- PORTFOLIO -->
+<div class="view" id="v-portfolio" data-title="Portfolio">
+<section class="wrap"><p class="mono">Portfolio</p><h1 style="font-size:clamp(2.5rem,6vw,5rem);margin-top:.6rem">Selected work.</h1><p style="margin-top:1rem">Sample projects marked as illustrative. Replace with real work.</p>
+<div class="filters" id="filters" role="group" aria-label="Filter projects"></div><div id="plist" aria-live="polite"></div></section></div>
+
+<!-- CONTACT -->
+<div class="view" id="v-contact" data-title="Contact">
+<section class="wrap two"><div>
+<p class="mono">Contact</p><h1 style="font-size:clamp(2.5rem,6vw,5rem);margin:.6rem 0 2rem">Start a project.</h1>
+<form id="form" novalidate>
+<div class="f2"><div><label for="name">Full name *</label><input id="name" name="name" autocomplete="name" required><div class="err" id="e-name"></div></div>
+<div><label for="email">Work email *</label><input id="email" name="email" type="email" autocomplete="email" required><div class="err" id="e-email"></div></div></div>
+<div><label for="company">Company <small>(optional)</small></label><input id="company" name="company" autocomplete="organization"></div>
+<div class="f2"><div><label for="type">Project type *</label><select id="type" name="type" required><option value="">Select</option><option>Website development</option><option>Web application</option><option>SaaS product</option><option>API / backend</option><option>E-commerce</option><option>Maintenance</option><option>Other</option></select><div class="err" id="e-type"></div></div>
+<div><label for="budget">Budget range</label><select id="budget" name="budget"><option value="">Not sure yet</option><option>Under 1,000</option><option>1,000 to 5,000</option><option>5,000 to 15,000</option><option>15,000+</option></select></div></div>
+<div class="f2"><div><label for="timeline">Desired timeline</label><select id="timeline" name="timeline"><option value="">Flexible</option><option>Within 1 month</option><option>1 to 3 months</option><option>3+ months</option></select></div>
+<div><label for="contactMethod">Preferred contact</label><select id="contactMethod" name="contactMethod"><option>Email</option><option>Video call</option><option>Phone</option></select></div></div>
+<div><label for="message">Project description *</label><textarea id="message" name="message" placeholder="What are you building, who is it for, and what should it achieve?" required></textarea><div class="err" id="e-message"></div></div>
+<div><label><input type="checkbox" id="consent" name="consent"> I agree to the <a href="#contact" data-pv>privacy notice</a> *</label><div class="err" id="e-consent"></div></div>
+<button class="btn pri" id="send" type="submit">Send Project Inquiry</button>
+<div class="status" id="status" role="status" tabindex="-1"></div>
+</form></div>
+<aside><h2 style="font-size:2rem">Let's Talk About Your Project</h2>
+<p>A consultation is a chance to discuss objectives, technical requirements, scope and next steps.</p>
+<div class="row"><a class="btn pri" id="book" href="#contact">Book a Consultation</a></div>
+<div class="box" id="cal"></div>
+<div class="box"><b>Direct contact</b><ul style="list-style:none;padding:0;margin-top:.6rem"><li><a id="mail" href="#">email</a></li><li><a data-l="github" href="#">GitHub</a></li><li><a data-l="linkedin" href="#">LinkedIn</a></li></ul></div></aside>
+</section></div>
+</main>
+
+<footer><div class="wrap"><div class="cols">
+<div><a class="logo" href="#home">AISHAT <i>STACK</i></a><p style="margin-top:.8rem">Websites, web applications and APIs, built end to end.</p><div class="row"><a class="btn pri" href="#contact">Book a Consultation</a></div></div>
+<div><h3>PAGES</h3><ul><li><a href="#home">Home</a></li><li><a href="#services">Services</a></li><li><a href="#portfolio">Portfolio</a></li><li><a href="#contact">Contact</a></li></ul></div>
+<div><h3>SERVICES</h3><ul id="fsvc"></ul></div>
+<div><h3>CONNECT</h3><ul><li><a id="fmail" href="#">Email</a></li><li><a data-l="github" href="#">GitHub</a></li><li><a data-l="linkedin" href="#">LinkedIn</a></li><li><a data-pv href="#contact">Privacy policy</a></li></ul></div></div>
+<p style="margin-top:2.5rem;font-size:.9rem">&copy; <span id="yr"></span> AISHAT STACK. All rights reserved.</p></div></footer>
+<a class="btn top" id="top" href="#" aria-label="Back to top">Top</a>
+
+<dialog id="dlg" aria-labelledby="dt"><div style="display:flex;justify-content:space-between;gap:1rem"><h2 id="dt" style="font-size:2rem"></h2><button class="btn" id="dclose" type="button">Close</button></div><div id="db"></div></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============ CONFIG: EDIT EVERYTHING HERE ============ */
+const CONFIG={
+ email:"hello@example.com",
+ github:"",          // https://github.com/you  (empty = shown as "not set")
+ linkedin:"",        // https://linkedin.com/in/you
+ privacyUrl:"",
+ formEndpoint:"",    // e.g. https://formspree.io/f/xxxxxxx
+ bookingUrl:"",      // e.g. https://cal.com/you/20min or Calendly link
+ technologies:["HTML","CSS","JavaScript","TypeScript","React","Node.js","PostgreSQL","REST APIs","Docker","Git"],
+ services:[
+  {id:"web",name:"Website Design and Development",cta:"Start a Website Project",who:"Businesses, professionals and individuals who need a credible, fast site.",value:"A clear site builds trust and turns visitors into enquiries.",items:["Business and professional websites","Landing pages","Portfolios","Responsive redesigns","Performance and accessibility improvements"],deliver:"Responsive pages, content structure, contact flow, launch support.",tech:"HTML, CSS, JavaScript, CMS where needed"},
+  {id:"app",name:"Full Stack Web Application Development",cta:"Build My Application",who:"Startups and teams building products or internal tools.",value:"Frontend, backend, database and integrations designed as one system, so features ship without rework.",items:["Custom web applications and SaaS","Customer portals and dashboards","Authentication and authorization","Admin systems","API and third-party integrations"],deliver:"Working application, data model, deployment, documentation.",tech:"React, Node.js, PostgreSQL"},
+  {id:"api",name:"Backend and API Engineering",cta:"Discuss Backend Development",who:"Teams needing reliable server logic or clean APIs.",value:"Validated, permissioned services other systems can depend on.",items:["REST API development","Database architecture","Authentication and permissions","Integrations and automation","Validation and error handling"],deliver:"API, schema, tests, documentation.",tech:"Node.js, SQL, REST"},
+  {id:"shop",name:"E-commerce and Business Systems",cta:"Discuss My Requirements",who:"Merchants and operators streamlining sales and workflows.",value:"Fewer manual steps between order, payment and fulfilment. Scope varies; not every feature suits every project.",items:["Online stores","Payment gateway integration","Inventory and order workflows","Customer management","Reporting dashboards and automation"],deliver:"Store or system scoped to your requirements.",tech:"Depends on needs"},
+  {id:"care",name:"Website Maintenance and Optimization",cta:"Improve My Website",who:"Owners of existing sites that need care.",value:"Keeps your site fast, secure and improving.",items:["Bug fixes","Performance improvements","Security-conscious maintenance","Feature enhancements","Technical audits and ongoing support"],deliver:"Audit findings, fixes, regular updates.",tech:"Matched to your stack"}],
+ /* SAMPLE PROJECTS: ILLUSTRATIVE AND FICTIONAL. Replace with real projects. */
+ projects:[
+  {id:"p1",sample:true,name:"Harbor Studio (sample)",cat:"Websites",tag:"Business website",problem:"A small design studio's site was slow and hard to enquire from.",solution:"A fast, accessible site with a streamlined enquiry flow.",role:"Design, frontend and deployment.",interest:"Hand-built, dependency-free, strong accessibility.",stack:["HTML","CSS","JavaScript"],demo:"",repo:"",
+   overview:"Illustrative redesign of a studio website.",objectives:"Faster load, clearer services, easier contact.",arch:["Browser","Static host","Form service"],front:"Semantic markup, responsive layout, progressive enhancement.",back:"Third-party form service, no custom server.",data:"No database; content in structured HTML.",challenges:"Balancing rich visuals with performance.",outcome:"Illustrative only. No metrics are claimed."},
+  {id:"p2",sample:true,name:"Ledgerly (sample)",cat:"Web Applications",tag:"SaaS dashboard",problem:"Freelancers track invoices across scattered spreadsheets.",solution:"A dashboard to create, send and track invoices.",role:"Full stack design and development.",interest:"Role-based access and scheduled reminders.",stack:["React","Node.js","PostgreSQL"],demo:"",repo:"",
+   overview:"Illustrative invoicing SaaS.",objectives:"One place for invoices, clients and payment status.",arch:["React app","REST API","PostgreSQL","Email service"],front:"Component-based UI with form validation.",back:"Authenticated REST API with validation and job scheduling.",data:"Users, clients, invoices and line items in relational tables.",challenges:"Modelling invoice states and permissions.",outcome:"Illustrative only. No metrics are claimed."},
+  {id:"p3",sample:true,name:"Routewise API (sample)",cat:"APIs and Backend",tag:"Backend system",problem:"A logistics team needed one API for scattered delivery data.",solution:"A documented API that unifies delivery events.",role:"Architecture and backend development.",interest:"Idempotent webhooks and clear error contracts.",stack:["Node.js","PostgreSQL","Docker"],demo:"",repo:"",
+   overview:"Illustrative delivery-tracking API.",objectives:"Reliable ingestion and queryable history.",arch:["Partners","Webhook intake","Queue","PostgreSQL","Client API"],front:"Small status page and API docs.",back:"Webhook validation, retries, versioned endpoints.",data:"Events table keyed for idempotency.",challenges:"Handling duplicate and out-of-order events.",outcome:"Illustrative only. No metrics are claimed."}]
+};
+/* ============ APP ============ */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const C=CONFIG;
+function link(a,url){if(url){a.href=url;a.target="_blank";a.rel="noopener"}else{a.href="#contact";a.title="Not configured yet";a.textContent+=" (not set)"}}
+$('#yr').textContent=new Date().getFullYear();
+$$('[data-l]').forEach(a=>link(a,C[a.dataset.l]));
+$$('[data-pv]').forEach(a=>{if(C.privacyUrl){a.href=C.privacyUrl;a.target="_blank";a.rel="noopener"}});
+['#mail','#fmail'].forEach(s=>{const a=$(s);a.href="mailto:"+C.email;a.textContent=C.email});
+const tl=C.technologies.map(t=>`<span>${esc(t)}</span>`).join('');$('#mq').innerHTML=tl+tl;
+const CAP_OFF='Click to separate the layers',CAP_ON='Interface, server, database, integrations';
+$('#tg').onclick=e=>{const b=e.currentTarget,on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);b.querySelector('.cap').textContent=on?CAP_ON:CAP_OFF;window.__stack&&window.__stack(on)};
+const pills=a=>`<ul class="pills">${a.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`;
+const mock=i=>`<div class="mock" aria-hidden="true"><div class="b"><i></i><i></i><i></i></div><svg viewBox="0 0 200 110" width="100%">${[
+`<rect x="14" y="14" width="100" height="12" rx="6" fill="#ccff00"/><rect x="14" y="36" width="150" height="6" rx="3" fill="#333"/><rect x="14" y="52" width="80" height="44" rx="10" fill="#1c1c1c"/><rect x="102" y="52" width="80" height="44" rx="10" fill="#1c1c1c"/>`,
+`<rect x="10" y="10" width="34" height="90" rx="8" fill="#1c1c1c"/><rect x="54" y="14" width="60" height="26" rx="8" fill="#1c1c1c"/><rect x="122" y="14" width="60" height="26" rx="8" fill="#1c1c1c"/><path d="M54 90L84 64L112 76L180 44" stroke="#ccff00" stroke-width="3" fill="none"/>`,
+`<circle cx="30" cy="55" r="12" fill="#ccff00"/><path d="M44 55H84M108 55H146" stroke="#555" stroke-width="2"/><rect x="84" y="41" width="24" height="28" rx="8" fill="#1c1c1c"/><rect x="146" y="41" width="38" height="28" rx="8" fill="#1c1c1c"/>`][i%3]}</svg></div>`;
+const pcard=(p,i)=>`<article class="work"><div class="txt">${p.sample?'<span class="sample">Illustrative sample project</span>':''}<h3>${esc(p.name)}</h3>${pills([p.tag,...p.stack])}<p><b style="color:#fff">Problem:</b> ${esc(p.problem)}</p><p><b style="color:#fff">Solution:</b> ${esc(p.solution)}</p><p><b style="color:#fff">My role:</b> ${esc(p.role)}</p><p><b style="color:#fff">Technically interesting:</b> ${esc(p.interest)}</p><button class="btn" data-case="${p.id}" type="button">View Case Study</button></div><div class="vis">${mock(i)}</div></article>`;
+$('#featured').innerHTML=C.projects.slice(0,3).map(pcard).join('');
+$('#svcprev').innerHTML=C.services.slice(0,3).map(s=>`<a href="#services"><p class="mono">Service</p><h3 style="margin:.5rem 0">${esc(s.name)}</h3><p>${esc(s.value)}</p></a>`).join('');
+$('#fsvc').innerHTML=C.services.map(s=>`<li><a href="#services">${esc(s.name)}</a></li>`).join('');
+$('#svclist').innerHTML=C.services.map(s=>`<article class="svc"><div><h2 style="font-size:2rem">${esc(s.name)}</h2><p>${esc(s.value)}</p><div class="row"><a class="btn pri" href="#contact" data-type="${esc(s.name)}">${esc(s.cta)}</a></div></div><div><h4>IDEAL FOR</h4><p>${esc(s.who)}</p><h4>INCLUDES</h4><ul>${s.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul><h4>DELIVERABLES</h4><p>${esc(s.deliver)}</p><h4>TECHNOLOGIES</h4><p>${esc(s.tech)}</p></div></article>`).join('');
+const cats=["All Projects",...new Set(C.projects.map(p=>p.cat))];let cur="All Projects";
+function drawP(){$('#filters').innerHTML=cats.map(c=>`<button type="button" aria-pressed="${c===cur}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+$('#plist').innerHTML=C.projects.map((p,i)=>(cur==="All Projects"||p.cat===cur)?pcard(p,i):'').join('')}
+drawP();
+$('#filters').addEventListener('click',e=>{const b=e.target.closest('button');if(b){cur=b.dataset.cat;drawP()}});
+const dlg=$('#dlg');let opener=null;
+document.addEventListener('click',e=>{const b=e.target.closest('[data-case]');if(!b)return;opener=b;
+const p=C.projects.find(x=>x.id===b.dataset.case);$('#dt').textContent=p.name;
+const sec=(h,t)=>`<h4>${h}</h4><p>${esc(t)}</p>`;
+$('#db').innerHTML=(p.sample?'<p class="sample">Illustrative sample project, not real client work.</p>':'')+sec('OVERVIEW',p.overview)+sec('PROBLEM',p.problem)+sec('OBJECTIVES',p.objectives)+sec('MY ROLE',p.role)+`<h4>ARCHITECTURE</h4><div class="arch">${p.arch.map((a,i)=>(i?'<em aria-hidden="true">&rarr;</em>':'')+`<span>${esc(a)}</span>`).join('')}</div>`+sec('FRONTEND',p.front)+sec('BACKEND',p.back)+sec('DATA DESIGN',p.data)+sec('CHALLENGES AND DECISIONS',p.challenges)+sec('OUTCOME AND LESSONS',p.outcome)+`<h4>STACK</h4>${pills(p.stack)}<div class="row">${p.demo?`<a class="btn" href="${esc(p.demo)}" target="_blank" rel="noopener">Live demo</a>`:''}${p.repo?`<a class="btn" href="${esc(p.repo)}" target="_blank" rel="noopener">Source code</a>`:''}<button class="btn pri" type="button" id="dcta">Discuss Your Project</button></div>`;
+dlg.showModal()});
+$('#dclose').onclick=()=>dlg.close();
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();if(e.target.id==='dcta'){dlg.close();location.hash='contact'}});
+dlg.addEventListener('close',()=>opener&&opener.focus());
+const routes=['home','services','portfolio','contact'];
+function route(){let r=location.hash.slice(1);if(!routes.includes(r))r='home';
+$$('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+r));
+$$('nav a.link').forEach(a=>a.getAttribute('href')==='#'+r?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
+document.title=(r==='home'?'AISHAT STACK | Full Stack Web Development Studio':$('#v-'+r).dataset.title+' | AISHAT STACK');
+$('#menu').classList.remove('open');$('#mbtn').setAttribute('aria-expanded','false');window.scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+$('#mbtn').onclick=()=>{const o=$('#menu').classList.toggle('open');$('#mbtn').setAttribute('aria-expanded',o)};
+document.addEventListener('click',e=>{const a=e.target.closest('[data-type]');if(a)sessionStorage.setItem('ptype',a.dataset.type)});
+addEventListener('hashchange',()=>{const t=sessionStorage.getItem('ptype');if(t&&location.hash==='#contact'){const s=$('#type');[...s.options].forEach(o=>{if(o.value&&t.toLowerCase().includes(o.text.split(' ')[0].toLowerCase()))s.value=o.value});sessionStorage.removeItem('ptype')}});
+const tb=$('#top');addEventListener('scroll',()=>tb.classList.toggle('show',scrollY>600),{passive:true});
+tb.onclick=e=>{e.preventDefault();scrollTo({top:0})};
+const cal=$('#cal'),book=$('#book');
+if(C.bookingUrl){book.href=C.bookingUrl;book.target="_blank";book.rel="noopener";
+cal.innerHTML=`<iframe title="Schedule a consultation" src="${esc(C.bookingUrl)}" style="width:100%;height:560px;border:0;border-radius:16px" loading="lazy"></iframe><p style="margin-top:.6rem;font-size:.9rem">Calendar not loading? <a href="${esc(C.bookingUrl)}" target="_blank" rel="noopener" style="color:var(--acc)">Open the booking page</a>.</p>`}
+else{book.addEventListener('click',e=>{e.preventDefault();location.href="mailto:"+C.email+"?subject=Consultation%20request"});
+cal.innerHTML='<b>Scheduling not configured</b><p>Set <code>bookingUrl</code> in CONFIG (Cal.com or Calendly) to show live availability here. Until then, the button emails a consultation request.</p>'}
+const f=$('#form'),st=$('#status');let sending=false;
+function setErr(id,msg){const el=$('#'+id),e=$('#e-'+id);if(e)e.textContent=msg;el.setAttribute('aria-invalid',!!msg);return !msg}
+function validate(){const em=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+return [setErr('name',f.name.value.trim()?'':'Enter your full name.'),setErr('email',em.test(f.email.value.trim())?'':'Enter a valid email address.'),setErr('type',f.type.value?'':'Choose a project type.'),setErr('message',f.message.value.trim().length>=20?'':'Describe your project in at least 20 characters.'),setErr('consent',f.consent.checked?'':'Please accept the privacy notice.')].every(Boolean)}
+function say(cls,msg){st.className='status show '+cls;st.textContent=msg;st.focus()}
+f.addEventListener('submit',async e=>{e.preventDefault();if(sending)return;
+if(!validate()){say('bad','Please fix the highlighted fields.');const b=f.querySelector('[aria-invalid=true]');b&&b.focus();return}
+if(!C.formEndpoint){say('demo','Demo mode: this form is not connected to a service, so nothing was sent. Email '+C.email+' instead.');return}
+sending=true;const btn=$('#send');btn.disabled=true;btn.textContent='Sending...';
+try{const d=Object.fromEntries(new FormData(f));delete d.consent;
+const res=await fetch(C.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(d)});
+if(!res.ok)throw new Error(res.status);f.reset();say('ok','Thank you. Your inquiry was sent.')}
+catch(err){say('bad','Your message could not be sent. Please try again or email '+C.email+'.')}
+finally{sending=false;btn.disabled=false;btn.textContent='Send Project Inquiry'}});
+
+/* ============ 3D: hero stack + card tilt ============ */
+(function(){
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+/* card tilt (fine pointers only) */
+if(!reduce&&matchMedia('(hover:hover)').matches){
+ const sel='.work,.stat,.sp a';
+ document.addEventListener('pointermove',e=>{
+  const c=e.target.closest&&e.target.closest(sel);
+  $$(sel+'[data-t]').forEach(n=>{if(n!==c){n.style.removeProperty('--rx');n.style.removeProperty('--ry');delete n.dataset.t}});
+  if(!c)return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+  c.dataset.t=1;c.style.setProperty('--ry',(x*7).toFixed(2)+'deg');c.style.setProperty('--rx',(-y*7).toFixed(2)+'deg')},{passive:true})}
+/* hero stack */
+const btn=$('#tg'),cv=$('#gl');
+if(!window.THREE||!cv){cv&&cv.remove();return}
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));
+const S=new THREE.Scene(),cam=new THREE.PerspectiveCamera(38,1,.1,50);
+cam.position.set(0,2.6,7.2);cam.lookAt(0,0,0);
+const G=new THREE.Group();S.add(G);
+const cols=[0x6a6a6a,0x9a9a9a,0xdddddd,0xccff00]; /* database, server, interface, integrations */
+const layers=cols.map((c,i)=>{const g=new THREE.BoxGeometry(2.6,.14,2.6);
+ const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:i===3?.28:.12}));
+ m.add(new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:c})));G.add(m);return m});
+const dots=new THREE.Group();G.add(dots);
+const dg=new THREE.SphereGeometry(.05,10,10),dm=new THREE.MeshBasicMaterial({color:0xccff00});
+for(let i=0;i<4;i++)for(let k=0;k<3;k++){const d=new THREE.Mesh(dg,dm);d.userData={l:i,x:(k-1)*.7,z:i%2?.5:-.5};dots.add(d)}
+let open=0,tgt=0,px=0,py=0,tx=0,ty=0,rot=0,vis=false,raf=0;
+function size(){const w=btn.clientWidth,h=btn.clientHeight;if(!w||!h)return;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+function draw(){open+=(tgt-open)*(reduce?1:.08);const gap=.2+open*.95;
+ layers.forEach((m,i)=>m.position.y=(i-1.5)*gap);
+ dots.children.forEach(d=>d.position.set(d.userData.x,(d.userData.l-1.5)*gap+.12,d.userData.z));
+ px+=(tx-px)*.08;py+=(ty-py)*.08;if(!reduce)rot+=.0035;
+ G.rotation.y=rot+px*.6;G.rotation.x=.1+py*.35;R.render(S,cam)}
+function loop(){draw();raf=vis?requestAnimationFrame(loop):0}
+function start(){if(reduce)draw();else if(!raf&&vis)raf=requestAnimationFrame(loop)}
+window.__stack=on=>{tgt=on?1:0;start()};
+new ResizeObserver(()=>{size();draw()}).observe(btn);
+new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)start()}).observe(btn);
+btn.addEventListener('pointermove',e=>{const r=btn.getBoundingClientRect();tx=(e.clientX-r.left)/r.width-.5;ty=(e.clientY-r.top)/r.height-.5});
+btn.addEventListener('pointerleave',()=>{tx=0;ty=0});
+})();
+</script>
+</body>
+</html>
