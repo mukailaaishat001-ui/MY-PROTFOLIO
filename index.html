@@ -102,6 +102,7 @@ form{display:grid;gap:1.1rem}.f2{display:grid;grid-template-columns:1fr 1fr;gap:
 label{display:block;font-weight:500;font-size:.95rem;margin-bottom:.3rem}label small{color:var(--mute);font-weight:400}
 input,select,textarea{width:100%;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:.85rem 1rem;font:inherit}
 input[type=checkbox]{width:auto}
+input[type=date]{color-scheme:dark}
 textarea{min-height:140px;resize:vertical}
 [aria-invalid=true]{border-color:var(--err)}
 .err{color:var(--err);font-size:.85rem;min-height:1.1em}
@@ -231,11 +232,11 @@ section{padding:4rem 0}
 <script>
 /* ============ CONFIG: EDIT EVERYTHING HERE ============ */
 const CONFIG={
- email:"hello@example.com",
+ email:"mukailaaishat81@gmail.com",
  github:"",          // https://github.com/you  (empty = shown as "not set")
  linkedin:"",        // https://linkedin.com/in/you
  privacyUrl:"",
- formEndpoint:"",    // e.g. https://formspree.io/f/xxxxxxx
+ formEndpoint:"https://formsubmit.co/ajax/mukailaaishat81@gmail.com", // sends to your inbox via FormSubmit
  bookingUrl:"",      // e.g. https://cal.com/you/20min or Calendly link
  technologies:["HTML","CSS","JavaScript","TypeScript","React","Node.js","PostgreSQL","REST APIs","Docker","Git"],
  services:[
@@ -304,8 +305,23 @@ tb.onclick=e=>{e.preventDefault();scrollTo({top:0})};
 const cal=$('#cal'),book=$('#book');
 if(C.bookingUrl){book.href=C.bookingUrl;book.target="_blank";book.rel="noopener";
 cal.innerHTML=`<iframe title="Schedule a consultation" src="${esc(C.bookingUrl)}" style="width:100%;height:560px;border:0;border-radius:16px" loading="lazy"></iframe><p style="margin-top:.6rem;font-size:.9rem">Calendar not loading? <a href="${esc(C.bookingUrl)}" target="_blank" rel="noopener" style="color:var(--acc)">Open the booking page</a>.</p>`}
-else{book.addEventListener('click',e=>{e.preventDefault();location.href="mailto:"+C.email+"?subject=Consultation%20request"});
-cal.innerHTML='<b>Scheduling not configured</b><p>Set <code>bookingUrl</code> in CONFIG (Cal.com or Calendly) to show live availability here. Until then, the button emails a consultation request.</p>'}
+else{book.addEventListener('click',e=>{e.preventDefault();cal.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>$('#sc-date').focus(),400)});
+const hrs=[9,10,11,12,13,14,15,16,17].map(h=>{const v=String(h).padStart(2,'0')+':00';return`<option value="${v}">${v}</option>`}).join('');
+cal.innerHTML=`<b>Book a consultation</b><p style="margin:.4rem 0 1rem">Pick a date and time (West Africa Time, Lagos). Your request goes straight to ${esc(C.email)}.</p><form id="sched" novalidate><div><label for="sc-name">Name *</label><input id="sc-name" autocomplete="name"><div class="err" id="sce-name"></div></div><div><label for="sc-email">Email *</label><input id="sc-email" type="email" autocomplete="email"><div class="err" id="sce-email"></div></div><div class="f2"><div><label for="sc-date">Date *</label><input id="sc-date" type="date"><div class="err" id="sce-date"></div></div><div><label for="sc-time">Time *</label><select id="sc-time">${hrs}</select></div></div><div><label for="sc-note">Topic <small>(optional)</small></label><input id="sc-note"></div><button class="btn pri" id="sc-send" type="submit">Request this time</button><div class="status" id="sc-status" role="status" tabindex="-1"></div></form>`;
+const sd=$('#sc-date');sd.min=new Date().toISOString().slice(0,10);
+const sf=$('#sched'),ss=$('#sc-status');let sbusy=false;
+const serr=(k,m)=>{$('#sce-'+k).textContent=m;$('#sc-'+k).setAttribute('aria-invalid',!!m);return !m};
+sf.addEventListener('submit',async e=>{e.preventDefault();if(sbusy)return;
+const n=$('#sc-name').value.trim(),em=$('#sc-email').value.trim(),d=sd.value,t=$('#sc-time').value,note=$('#sc-note').value.trim();
+const ok=[serr('name',n?'':'Enter your name.'),serr('email',/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)?'':'Enter a valid email address.'),serr('date',d&&d>=sd.min?'':'Choose a date from today onward.')].every(Boolean);
+const say2=(c,m)=>{ss.className='status show '+c;ss.textContent=m;ss.focus()};
+if(!ok){say2('bad','Please fix the highlighted fields.');return}
+const body={name:n,email:em,date:d,time:t+' (WAT, Lagos)',topic:note||'Not given',_subject:'Consultation request: '+d+' '+t+' | AISHAT STACK',_template:'table',_captcha:'false',_replyto:em};
+sbusy=true;const sb=$('#sc-send');sb.disabled=true;sb.textContent='Sending...';
+try{const r=await fetch(C.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)});
+if(!r.ok)throw new Error(r.status);sf.reset();say2('ok','Request sent for '+d+' at '+t+'. You will get a reply by email.')}
+catch(err){say2('bad','Could not send. Please try again or email '+C.email+'.')}
+finally{sbusy=false;sb.disabled=false;sb.textContent='Request this time'}})}
 const f=$('#form'),st=$('#status');let sending=false;
 function setErr(id,msg){const el=$('#'+id),e=$('#e-'+id);if(e)e.textContent=msg;el.setAttribute('aria-invalid',!!msg);return !msg}
 function validate(){const em=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -315,7 +331,7 @@ f.addEventListener('submit',async e=>{e.preventDefault();if(sending)return;
 if(!validate()){say('bad','Please fix the highlighted fields.');const b=f.querySelector('[aria-invalid=true]');b&&b.focus();return}
 if(!C.formEndpoint){say('demo','Demo mode: this form is not connected to a service, so nothing was sent. Email '+C.email+' instead.');return}
 sending=true;const btn=$('#send');btn.disabled=true;btn.textContent='Sending...';
-try{const d=Object.fromEntries(new FormData(f));delete d.consent;
+try{const d=Object.fromEntries(new FormData(f));delete d.consent;d._subject='New project inquiry from '+d.name+' | AISHAT STACK';d._template='table';d._captcha='false';
 const res=await fetch(C.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(d)});
 if(!res.ok)throw new Error(res.status);f.reset();say('ok','Thank you. Your inquiry was sent.')}
 catch(err){say('bad','Your message could not be sent. Please try again or email '+C.email+'.')}
