@@ -237,7 +237,7 @@ const CONFIG={
  linkedin:"",        // https://linkedin.com/in/you
  privacyUrl:"",
  formEndpoint:"https://formsubmit.co/ajax/mukailaaishat81@gmail.com", // sends to your inbox via FormSubmit
- bookingUrl:"",      // e.g. https://cal.com/you/20min or Calendly link
+ bookingUrl:"https://calendly.com/mukailaaishat001/30min",      // e.g. https://cal.com/you/20min or Calendly link
  technologies:["HTML","CSS","JavaScript","TypeScript","React","Node.js","PostgreSQL","REST APIs","Docker","Git"],
  services:[
   {id:"web",name:"Website Design and Development",cta:"Start a Website Project",who:"Businesses, professionals and individuals who need a credible, fast site.",value:"A clear site builds trust and turns visitors into enquiries.",items:["Business and professional websites","Landing pages","Portfolios","Responsive redesigns","Performance and accessibility improvements"],deliver:"Responsive pages, content structure, contact flow, launch support.",tech:"HTML, CSS, JavaScript, CMS where needed"},
@@ -303,8 +303,9 @@ addEventListener('hashchange',()=>{const t=sessionStorage.getItem('ptype');if(t&
 const tb=$('#top');addEventListener('scroll',()=>tb.classList.toggle('show',scrollY>600),{passive:true});
 tb.onclick=e=>{e.preventDefault();scrollTo({top:0})};
 const cal=$('#cal'),book=$('#book');
-if(C.bookingUrl){book.href=C.bookingUrl;book.target="_blank";book.rel="noopener";
-cal.innerHTML=`<iframe title="Schedule a consultation" src="${esc(C.bookingUrl)}" style="width:100%;height:560px;border:0;border-radius:16px" loading="lazy"></iframe><p style="margin-top:.6rem;font-size:.9rem">Calendar not loading? <a href="${esc(C.bookingUrl)}" target="_blank" rel="noopener" style="color:var(--acc)">Open the booking page</a>.</p>`}
+if(C.bookingUrl){const embed=C.bookingUrl+(C.bookingUrl.includes("?")?"&":"?")+"hide_gdpr_banner=1&background_color=0e0e0e&text_color=ffffff&primary_color=ccff00";
+book.addEventListener("click",e=>{e.preventDefault();cal.scrollIntoView({behavior:"smooth",block:"center"})});
+cal.innerHTML=`<iframe title="Schedule a consultation" src="${esc(embed)}" style="width:100%;height:720px;border:0;border-radius:16px" loading="lazy"></iframe><p style="margin-top:.6rem;font-size:.9rem">Calendar not loading? <a href="${esc(C.bookingUrl)}" target="_blank" rel="noopener" style="color:var(--acc)">Open the booking page</a>.</p>`}
 else{book.addEventListener('click',e=>{e.preventDefault();cal.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>$('#sc-date').focus(),400)});
 const hrs=[9,10,11,12,13,14,15,16,17].map(h=>{const v=String(h).padStart(2,'0')+':00';return`<option value="${v}">${v}</option>`}).join('');
 cal.innerHTML=`<b>Book a consultation</b><p style="margin:.4rem 0 1rem">Pick a date and time (West Africa Time, Lagos). Your request goes straight to ${esc(C.email)}.</p><form id="sched" novalidate><div><label for="sc-name">Name *</label><input id="sc-name" autocomplete="name"><div class="err" id="sce-name"></div></div><div><label for="sc-email">Email *</label><input id="sc-email" type="email" autocomplete="email"><div class="err" id="sce-email"></div></div><div class="f2"><div><label for="sc-date">Date *</label><input id="sc-date" type="date"><div class="err" id="sce-date"></div></div><div><label for="sc-time">Time *</label><select id="sc-time">${hrs}</select></div></div><div><label for="sc-note">Topic <small>(optional)</small></label><input id="sc-note"></div><button class="btn pri" id="sc-send" type="submit">Request this time</button><div class="status" id="sc-status" role="status" tabindex="-1"></div></form>`;
